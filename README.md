@@ -1,8 +1,38 @@
 # Design-to-Web Agent Lab
 
+[![Tests](https://github.com/nsdmalik/design-to-web-agent-lab/actions/workflows/test.yml/badge.svg)](https://github.com/nsdmalik/design-to-web-agent-lab/actions/workflows/test.yml)
+
 **A traceable workflow from a design brief to a reviewable static website.**
 
 A Python agent workflow with separate planning, implementation, validation, and bounded repair stages. It includes a deterministic offline example and a live Anthropic Messages API provider. Generated files are written only after they pass the documented checks, then handed to a person for review.
+
+## From brief to review
+
+```mermaid
+flowchart LR
+    A[Design brief] --> B[Planning stage]
+    B --> C[Implementation stage]
+    C --> D{Structural validation}
+    D -->|Pass| E[Write static preview]
+    D -->|Fail| F[One repair attempt]
+    F --> G{Validate again}
+    G -->|Pass| E
+    G -->|Fail| H[Record failure]
+    E --> I[Human review]
+```
+
+The model proposes a design and implementation. The workflow controls file permissions, validation, the repair budget, and whether preview files are written. A successful run ends at `review_required`.
+
+| Try this | Expected result |
+| --- | --- |
+| Run the supplied brief with the replay provider | A static workshop page, a design plan, and a run manifest. |
+| Return a script or an external resource | Validation errors and at most one repair attempt. |
+| Return an arbitrary output path | Rejection before preview files are written. |
+| Reuse an existing output directory | An error instead of overwriting the earlier run. |
+
+The replay is a deterministic example. The live provider uses the same workflow with model-generated output.
+
+[Example HTML](sample.html) · [Example styling](sample.css) · [Workflow tests](test_workflow.py)
 
 ## Run the offline example
 
