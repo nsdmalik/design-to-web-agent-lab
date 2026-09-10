@@ -1,0 +1,7 @@
+{
+  "name": "Field Notes Studio",
+  "audience": "Independent makers and designers",
+  "goal": "Introduce a fictional weekend workshop on turning rough ideas into useful prototypes.",
+  "tone": "Direct, welcoming, and practical",
+  "content": {"date": "An upcoming weekend", "location": "A fictional studio", "sections": ["Introduction", "Program", "Contact section"]}
+}
